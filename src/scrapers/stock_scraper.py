@@ -7,6 +7,8 @@ import sys
 import os
 
 # Add parent directory to path for imports
+# NOTE: This is a temporary solution. For proper usage, install the package:
+# pip install -e .
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from src.models.data_models import StockData

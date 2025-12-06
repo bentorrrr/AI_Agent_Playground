@@ -10,6 +10,8 @@ import os
 from datetime import datetime
 
 # Add parent directory to path
+# NOTE: This is a temporary solution. For proper usage, install the package:
+# pip install -e .
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from src.models.data_models import NewsArticle, StockData, AnalysisResult

@@ -5,6 +5,8 @@ import os
 import sys
 
 # Add parent directory to path
+# NOTE: This is a temporary solution. For proper usage, install the package:
+# pip install -e .
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.scrapers import NewsScraper, StockScraper

@@ -8,9 +8,16 @@ import sys
 import os
 
 # Add parent directory to path for imports
+# NOTE: This is a temporary solution. For proper usage, install the package:
+# pip install -e .
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from src.models.data_models import NewsArticle, StockData, AnalysisResult
+
+# Constants for recommendation algorithm
+CONFIDENCE_SCALING_FACTOR = 10  # Number of articles needed for full confidence
+POSITIVE_SENTIMENT_THRESHOLD = 0.2  # Threshold for positive sentiment
+NEGATIVE_SENTIMENT_THRESHOLD = -0.2  # Threshold for negative sentiment
 
 
 class TechStockAnalyzer:
@@ -76,9 +83,9 @@ class TechStockAnalyzer:
         avg_sentiment = sum(sentiments) / len(sentiments) if sentiments else 0.0
         
         # Generate sentiment summary
-        if avg_sentiment > 0.2:
+        if avg_sentiment > POSITIVE_SENTIMENT_THRESHOLD:
             sentiment_summary = "Positive - News sentiment is generally favorable"
-        elif avg_sentiment < -0.2:
+        elif avg_sentiment < NEGATIVE_SENTIMENT_THRESHOLD:
             sentiment_summary = "Negative - News sentiment is generally unfavorable"
         else:
             sentiment_summary = "Neutral - News sentiment is mixed or neutral"
@@ -86,8 +93,9 @@ class TechStockAnalyzer:
         # Generate basic recommendation (this is a placeholder for future ML model)
         recommendation = self._generate_recommendation(stock_data, avg_sentiment)
         
-        # Calculate confidence score (placeholder)
-        confidence_score = min(abs(avg_sentiment) * len(related_articles) / 10, 1.0)
+        # Calculate confidence score based on article volume and sentiment strength
+        # More articles and stronger sentiment = higher confidence
+        confidence_score = min(abs(avg_sentiment) * len(related_articles) / CONFIDENCE_SCALING_FACTOR, 1.0)
         
         # Convert articles to dict format
         articles_dict = [article.to_dict() for article in related_articles]
@@ -124,11 +132,12 @@ class TechStockAnalyzer:
         price_change_percent = stock_data.price_change_percent
         
         # Simple rule-based recommendation (placeholder)
-        if sentiment > 0.3 and price_change_percent > 0:
+        # Using threshold constants for consistency
+        if sentiment > POSITIVE_SENTIMENT_THRESHOLD + 0.1 and price_change_percent > 0:
             return "BUY - Strong positive sentiment and upward price momentum"
         elif sentiment > 0.1 and price_change_percent > 2:
             return "BUY - Positive sentiment with strong price movement"
-        elif sentiment < -0.3 and price_change_percent < 0:
+        elif sentiment < NEGATIVE_SENTIMENT_THRESHOLD - 0.1 and price_change_percent < 0:
             return "SELL - Negative sentiment and downward price momentum"
         elif sentiment < -0.1 and price_change_percent < -2:
             return "SELL - Negative sentiment with declining price"
