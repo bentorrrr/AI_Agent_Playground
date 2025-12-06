@@ -2,7 +2,6 @@
 News scraper for tech companies using RSS feeds and web scraping.
 """
 import feedparser
-import requests
 from bs4 import BeautifulSoup
 from typing import List, Dict, Any
 from datetime import datetime

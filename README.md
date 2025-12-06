@@ -41,6 +41,12 @@ cd AI_Agent_Playground
 pip install -r requirements.txt
 ```
 
+**Optional: Install in development mode** (recommended for development)
+```bash
+pip install -e .
+```
+This makes the package importable from anywhere and eliminates the need for sys.path manipulation.
+
 ### Basic Usage
 
 Run the main scraper and analyzer:

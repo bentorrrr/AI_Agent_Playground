@@ -3,7 +3,7 @@ Utility functions for the tech stock scraper.
 """
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Dict, Any
 import time
 
@@ -108,8 +108,6 @@ def filter_by_date(data: List[Dict[str, Any]],
     Returns:
         Filtered data list
     """
-    from datetime import timedelta
-    
     cutoff_date = datetime.now() - timedelta(days=days)
     filtered_data = []
     
